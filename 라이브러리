@@ -1,0 +1,2 @@
+npm install chalk figlet readline-sync
+npm install -D prettier // 개발상황에서만 쓰이는 라이브러리 (-D 옵션)
