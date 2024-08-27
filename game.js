@@ -4,20 +4,25 @@ import readlineSync from 'readline-sync';
 class Player {
   constructor() {
     this.hp = 100;
+    this.power = 20;
+    this.defense = 20;
   }
 
   attack() {
     // 플레이어의 공격
+    
   }
 }
 
 class Monster {
   constructor() {
     this.hp = 100;
+    
   }
 
   attack() {
     // 몬스터의 공격
+
   }
 }
 
