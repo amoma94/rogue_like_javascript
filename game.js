@@ -57,7 +57,7 @@ function displayStatus(stage, player, monster) {
 const battle = async (stage, player, monster) => {
   let logs = [];
 
-  while(player.hp > 0 && monster.hp > 0) {
+  while(player.hp > 0 && monster.hp >= 0) {
     console.clear();
     displayStatus(stage, player, monster);
 
