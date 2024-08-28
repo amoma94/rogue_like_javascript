@@ -4,26 +4,40 @@ import readlineSync from 'readline-sync';
 class Player {
   constructor() {
     this.hp = 100;
+    this.maxhp = 100;
     this.power = 20;
-    this.defense = 20;
   }
 
   attack() {
     // 플레이어의 공격
     return Math.floor((Math.random() * 5) + 1) + this.power; 
   }
+
+  stats() {
+    this.maxhp += 50;
+    this.hp += Math.floor((Math.random() * 15) + 1) + 30;
+    this.power += Math.floor(Math.random() * 10);
+  }
 }
 
+
+
 class Monster {
-  constructor() {
-    this.hp = 80;
-    this.power = 10;
-    this.defense = 10;
+  constructor(stage) {
+    this.hp = 60 + stage * 7;
+    this.maxhp = 60 + stage * 7;
+    this.power = 5 + stage * 3;
   }
 
   attack() {
     // 몬스터의 공격
     return Math.floor((Math.random() * 5) +1) + this.power;
+  }
+
+  stats() {
+    this.maxhp += 20;
+    this.hp = this.maxhp;
+    this.power += Math.floor(Math.random() * 6);
   }
 }
 
@@ -81,10 +95,18 @@ const battle = async (stage, player, monster) => {
         break;
 
       case '2':
-        if(Math.random() * 0.3) {
-          logs.push(chalk.yellow(`플레이어가 도망갔습니다.`));
+        if(Math.random() < 0.7) {
+          console.log(chalk.yellow(`\n플레이어가 도망에 성공했습니다.`));
+          readlineSync.question('다음 스테이지로 넘어가려면 엔터키를 누르세요.')
+          return true;
+        
+        } else {
+          logs.push(chalk.redBright(`\n플레이어가 도망에 실패했습니다.`));
+          const monsterdamege = monster.attack(player);
+          player.hp -= monsterdamege;
+          logs.push(chalk.redBright(`몬스터가 플레이어에게 ${monsterdamege}의 피해를 입혔습니다.`));
+        }
         break;
-        } 
         }
 
       }
@@ -108,10 +130,14 @@ export async function startGame() {
     
     if(monster.hp <= 0) {
       console.log(chalk.green(`스테이지 ${stage}클리어`));
+      player.stats();
+      monster.stats();
       readlineSync.question('다음 스테이지로 넘어가려면 엔터키를 누르세요.');
     }
 
     stage++;
+
+
     
     // 스테이지 클리어 및 게임 종료 조건
   }  
