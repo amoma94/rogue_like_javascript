@@ -15,12 +15,11 @@ class Player {
 
   stats() {
     this.maxhp += 50;
+    this.hp = Math.min(this.hp, this.maxhp);
     this.hp += Math.floor((Math.random() * 15) + 1) + 30;
     this.power += Math.floor(Math.random() * 10);
   }
 }
-
-
 
 class Monster {
   constructor(stage) {
@@ -37,7 +36,7 @@ class Monster {
   stats() {
     this.maxhp += 20;
     this.hp = this.maxhp;
-    this.power += Math.floor(Math.random() * 6);
+    this.power += Math.floor(Math.random() * 6); 
   }
 }
 
@@ -52,7 +51,7 @@ function displayStatus(stage, player, monster) {
       `\n| 몬스터 체력 : ${monster.hp}, 몬스터 공격력 : ${monster.power}, 몬스터 방어력 : ${monster.defense} |`,
     ),
   );
-  console.log(chalk.magentaBright(`=====================\n`)); // \n = 줄 나누기 위해 사용, ${} = 값을 넣기 위해 사용, `` = 왜 쓰지
+  console.log(chalk.magentaBright(`=====================\n`)); // \n = 줄 나누기 위해 사용, ${} = 값을 넣기 위해 사용
 }
 
 const battle = async (stage, player, monster) => {
